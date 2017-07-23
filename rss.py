@@ -1,16 +1,72 @@
 import feedparser
+import json
+import os
+from csv import DictWriter
 
 url = 'http://infopraca.pl/rss'
-d = feedparser.parse(url)
-print(d['feed'].keys())
+
+
+
+
 
 file_out = 'data/out.csv'
 file_last_entries = 'data/last.json'
+file_last_rss_update = 'data/updated'
 
 
-for entry in d.entries:
-    print(entry)
+def check_if_rss_update_changed(update_from_feed):
+    if not os.path.isfile(file_last_rss_update):
+        with open(file_last_rss_update, 'w') as f:
+            f.write('')
+    with open(file_last_rss_update) as f:
+        content = f.read()
+    if content != update_from_feed:
+        return True
+    else:
+        return False
+
+
+def append_entry_to_csv(entry):
+    fieldnames = ['title', 'link', 'descriptionj']
+    with open(file_out, 'a', newline='') as f:
+        writer = DictWriter(f, fieldnames, extrasaction='ignore')
+        writer.writerow(entry)
+
+
+def append_to_csv(new_entries, last_entries):
+    last_entries_ids = ([entry.id for entry in last_entries])
+    for entry in new_entries:
+        if entry.id not in last_entries_ids:
+            append_entry_to_csv(entry)
+
+
+def save_last_update(published):
+    pass
+
+
+def save_last_entries(entries):
+    pass
+
+
+def read_last_entries():
+    if not os.path.isfile(file_last_entries):
+        with open(file_last_entries, 'w') as f:
+            f.write('{}')
+    with open(file_last_entries) as f:
+        last = json.load(f)
+        return last
+
+
+def main():
+    d = feedparser.parse(url)
+    rss_updated = d.feed.updated
+    if check_if_rss_update_changed(rss_updated):
+        last_entries = read_last_entries()
+        append_to_csv(d.entries, last_entries)
+        save_last_update(rss_updated)
+        save_last_entries(d.entries)
 
 
 
-
+if __name__ == '__main__':
+    main()
