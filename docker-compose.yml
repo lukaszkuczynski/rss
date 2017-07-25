@@ -1,6 +1,0 @@
-version: '2'
-services:
-  parser:
-    build: .
-    volumes:
-    - ${PWD}/data:/root/app/data
