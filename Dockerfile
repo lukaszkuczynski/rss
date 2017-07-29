@@ -1,8 +1,10 @@
-FROM continuumio/miniconda3 
+FROM luk/rpi-miniconda 
 MAINTAINER Lukasz Kuczynski <kuczynskilukasz@gmail.com>
 
-COPY app /root/app
+ENTRYPOINT python rss.py
 WORKDIR /root/app
+COPY app/requirements.txt /root/app/requirements.txt
 RUN pip install -r requirements.txt
 
-ENTRYPOINT python rss.py
+COPY app /root/app
+
