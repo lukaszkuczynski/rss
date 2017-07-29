@@ -9,7 +9,8 @@ url = 'http://infopraca.pl/rss'
 
 
 
-file_out = 'data/out.csv'
+file_feed_simple = 'data/simple_feed.csv'
+file_feed_full = 'data/full_feed.csv'
 file_last_entries = 'data/last.json'
 file_last_rss_update = 'data/updated'
 
@@ -27,17 +28,18 @@ def check_if_rss_update_changed(update_from_feed):
 
 
 def append_entry_to_csv(entry):
-    fieldnames = ['title', 'link', 'published']
-    with open(file_out, 'a', newline='', encoding='utf8') as f:
-        writer = DictWriter(f, fieldnames, extrasaction='ignore')
+    fieldnames_simple = ['title', 'link', 'published']
+    fieldnames_full = ['title', 'link', 'published', 'description']
+    with open(file_feed_simple, 'a', newline='', encoding='utf8') as f:
+        writer = DictWriter(f, fieldnames_simple, extrasaction='ignore')
+        writer.writerow(entry)
+    with open(file_feed_full, 'a', newline='', encoding='utf8') as f:
+        writer = DictWriter(f, fieldnames_full, extrasaction='ignore')
         writer.writerow(entry)
 
 
-def append_to_csv(new_entries, last_entries):
-    try:
-        last_entries_ids = ([entry.id for entry in last_entries])
-    except:
-        last_entries_ids = []
+
+def append_to_csv(new_entries, last_entries_ids):
     for entry in new_entries:
         if entry.id not in last_entries_ids:
             append_entry_to_csv(entry)
@@ -51,7 +53,8 @@ def save_last_update(updated):
 
 def save_last_entries(entries):
     with open(file_last_entries, 'w', encoding='utf8') as f:
-        txt = json.dumps(entries)
+        last_entries_ids = ([entry.id for entry in file_last_entries])
+        txt = json.dumps(last_entries_ids)
         f.write(txt)
 
 
