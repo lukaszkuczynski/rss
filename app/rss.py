@@ -53,7 +53,7 @@ def save_last_update(updated):
 
 def save_last_entries(entries):
     with open(file_last_entries, 'w', encoding='utf8') as f:
-        last_entries_ids = ([entry.id for entry in file_last_entries])
+        last_entries_ids = ([entry.id for entry in entries])
         txt = json.dumps(last_entries_ids)
         f.write(txt)
 
