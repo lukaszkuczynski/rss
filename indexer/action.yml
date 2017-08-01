@@ -1,0 +1,15 @@
+actions:
+  1:
+    action: create_index
+    description: "Create index for RSS"
+    options:
+      name: infopraca_rss
+      extra_settings:
+        settings:
+          number_of_shards: 1
+          number_of_replicas: 0
+        mappings:
+          offer:
+            properties:
+              created_at:
+                type: date
