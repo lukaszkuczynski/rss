@@ -9,6 +9,8 @@ services:
      - elasticsearch
     networks:
      - elk
+    environment:
+     - ELASTICSEARCH_URL=http://localhost:9200
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
