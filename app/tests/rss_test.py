@@ -4,11 +4,14 @@ from app.rss import prepare_entry_before_writing_to_csv
 class RssTest(TestCase):
 
     def test_csv_strips_newline(self):
-        entry_before = {
-            "description": "blabla\nblabla"
+        description = "blabla\nblabla"
+        entry = {
+            "description": description
         }
-        entry_after = prepare_entry_before_writing_to_csv(entry_before)
-        self.assertNotEqual(entry_before['description'], entry_after['description'])
+        prepare_entry_before_writing_to_csv(entry)
+        description_after = entry['description']
+        self.assertNotEqual(description, description_after)
+        self.assertEqual(description_after, "blablablabla")
 
 if __name__ == '__main__':
     main()
