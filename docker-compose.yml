@@ -1,0 +1,36 @@
+version: '2'
+services:
+
+  kibana:
+    image: kibana
+    ports:
+     - 5601:5601
+    depends_on:
+     - elasticsearch
+    networks:
+     - elk
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    ports:
+     - 9200:9200
+    volumes:
+     - /var/rss_esdata:/usr/share/elasticsearch/data
+    environment:
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.graph.enabled=false
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 8g
+    networks:
+     - elk
+
+
+networks:
+  elk:
+    driver: bridge

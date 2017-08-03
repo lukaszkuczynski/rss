@@ -1,6 +1,6 @@
 input {
   file {
-	path => "c:/p/logstash-5.5.1/bin/full_feed.csv"	
+	path => "/var/log/rss/full_feed.csv"
 	start_position => beginning
     sincedb_path => "/dev/null"
     ignore_older => 0
