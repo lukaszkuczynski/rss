@@ -1,1 +1,1 @@
-docker run -it --rm -v $PWD/pipeline/:/usr/share/logstash/pipeline/ docker.elastic.co/logstash/logstash:5.5.0
+docker run -it --rm -e ELASTICSEARCH_URL=${IP}:9200 --name rss_logstash -v ${PWD}/pipeline/:/usr/share/logstash/pipeline/ -v ${PWD}/logstash.yml:/usr/share/logstash/config/logstash.yml docker.elastic.co/logstash/logstash:5.5.0
