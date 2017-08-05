@@ -1,2 +1,1 @@
-export IP=192.168.1.5
-docker run -it --rm -e ELASTICSEARCH_URL=${IP}:9200 --name rss_logstash -v ${PWD}/cssed_feeds:/feeds -v ${PWD}/pipeline/:/usr/share/logstash/pipeline/ -v ${PWD}/logstash.yml:/usr/share/logstash/config/logstash.yml docker.elastic.co/logstash/logstash:5.5.0
+docker run -it --rm --network rss_default -e ELASTICSEARCH_URL=elasticsearch:9200 --name rss_logstash -v ${PWD}/cssed_feeds:/feeds -v ${PWD}/pipeline/:/usr/share/logstash/pipeline/ -v ${PWD}/logstash.yml:/usr/share/logstash/config/logstash.yml docker.elastic.co/logstash/logstash:5.5.0
