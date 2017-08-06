@@ -13,7 +13,7 @@ services:
      - elasticsearch.password=
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    image: luk/polski_elasticsearch
     ports:
      - 9200:9200
     volumes:
