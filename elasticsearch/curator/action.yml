@@ -1,4 +1,14 @@
 actions:
+  0:
+    action: delete_indices
+    description: "Remove index for RSS if exists"
+    options:
+      timeout_override: 300
+      continue_if_exception: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: infopraca_rss
   1:
     action: create_index
     description: "Create index for RSS"
@@ -13,3 +23,11 @@ actions:
             properties:
               created_at:
                 type: date
+                format: "EEE, dd MMM YYYY HH:mm:ss Z"
+              text:
+                type: text
+                analyzer: polish
+              link:
+                type: keyword
+              title:
+                type: keyword
