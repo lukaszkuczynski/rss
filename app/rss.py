@@ -28,7 +28,7 @@ def check_if_rss_update_changed(update_from_feed):
 
 def prepare_entry_before_writing_to_csv(entry):
     if 'description' in entry:
-        entry['description'] = entry['description'].replace("\n", "")
+        entry['description'] = entry['description'].replace("\n", " ")
     return entry
 
 def append_entry_to_csv(entry):

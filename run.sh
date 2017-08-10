@@ -1,1 +1,1 @@
-docker run -v /opt/rssparser/data:/root/app/data rss
+docker run -v /home/pi/Downloads/rssdata:/root/app/data rss
