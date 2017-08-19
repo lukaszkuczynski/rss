@@ -4,8 +4,7 @@ from csv import DictReader
 
 es = Elasticsearch()
 
-
-path = "./logstash/cssed_feeds/full_feed.csv"
+path = "/home/luk/Downloads/full_feed.csv"
 def gen_bulk_actions():
     with open(path) as f:
         reader = DictReader(f, fieldnames=['title','link','created_at','text'])

@@ -3,7 +3,7 @@ import json
 import os
 from csv import DictWriter
 
-url = 'http://infopraca.pl/rss'
+
 
 
 
@@ -76,6 +76,7 @@ def read_last_entries():
 
 
 def main():
+    url = os.environ['FEED_URL']
     d = feedparser.parse(url)
     rss_updated = d.feed.updated
     if check_if_rss_update_changed(rss_updated):
